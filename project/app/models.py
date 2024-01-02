@@ -11,6 +11,11 @@ CATEGORY = [
     ('Menú Infantil', 'Menú Infantil'),
 ]
 
+RESTAURANTS = [
+    ('Carnes', 'Carnes'),
+    ('Pescados', 'Pescados'),
+    ('Típicos', 'Típicos'), 
+]
 class menu (models.Model):
     name = models.CharField(max_length=40)
     description = models.CharField(max_length =1000)
@@ -25,6 +30,7 @@ class contact(models.Model):
     email = models.EmailField()
     
 class booking (models.Model):
+    restaurant = models.CharField(choices=RESTAURANTS,  max_length = 1000)
     name = models.CharField(max_length=40)
     phone = models.CharField(max_length=12)
     date = models.DateField()
