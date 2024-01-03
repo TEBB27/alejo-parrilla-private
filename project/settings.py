@@ -10,7 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+from django.conf import global_settings
 from pathlib import Path
+import os 
 # from django.conf import global_settings
 
 # TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
@@ -28,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0t06p_^#o3j3i&n_k0#3=l)_-%-)sb%@)fc4wct9+6wo7buz8('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -37,7 +39,8 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     # 'jet',
-    'jazzmin',
+    # 'jet.dashboard'
+    # 'jazzmin',
     'app.apps.AppConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -50,11 +53,11 @@ INSTALLED_APPS = [
     'coreapi',
 ]
 
-JAZZMIN_SETTINGS = {
-    "site_title": "Alejo Parrilla",
-    "site_brand": "Alejo Parrilla",
-    "welcome_sign": "Welcome to the Alejo Parrilla Admin",
-}
+# JAZZMIN_SETTINGS = {
+#     "site_title": "Alejo Parrilla",
+#     "site_brand": "Alejo Parrilla",
+#     "welcome_sign": "Welcome to the Alejo Parrilla Admin",
+# }
 
 
 
@@ -67,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -168,3 +172,21 @@ CORS_ALCORS_ALLOW_METHODS = (
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
 }
+
+# TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
+#     'django.core.context_processors.request',
+# )
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_TMP = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
+
+os.makedirs(STATIC_TMP, exist_ok=True)
+os.makedirs(STATIC_ROOT, exist_ok=True)
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

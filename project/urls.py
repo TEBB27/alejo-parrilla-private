@@ -20,5 +20,13 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('app/', include('app.urls')),
-    # url(r'^jet/', include('jet.urls', 'jet')),
+    path('jet/', include('jet.urls')),
 ]
+
+
+# urlpatterns = patterns(
+#     '',
+#     url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
+#     url(r'^admin/', include(admin.site.urls)),
+#     ...
+# )
