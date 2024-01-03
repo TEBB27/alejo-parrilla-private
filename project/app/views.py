@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.response import Response
 from .serializers import menuSerializer, bookingSerializer, contactSerializer, recomendationSerializer
@@ -31,3 +31,10 @@ class bookingViewSet(viewsets.ModelViewSet):
 class recomendationViewSet(viewsets.ModelViewSet):
     queryset = recomendation.objects.all()
     serializer_class = recomendationSerializer
+    
+class menuListByCategory(generics.ListAPIView):
+    serializer_class = menuSerializer
+
+    def get_queryset(self):
+        category = self.kwargs['category']
+        return menu.objects.filter(category=category)
