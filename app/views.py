@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 from rest_framework import viewsets, generics
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.response import Response
@@ -9,6 +9,14 @@ from .models import menu, contact, booking, recomendation
 class menuViewSet(viewsets.ModelViewSet):
     queryset = menu.objects.all()
     serializer_class = menuSerializer
+
+def add_menu_item(request, item_name):
+    item, created = menu.objects.get_or_create(name=item_name)
+    
+    if created:
+        return HttpResponse(f'Item {item_name} ha sido añadido al menú.')
+    else:
+        return HttpResponse(f'Item {item_name} ya existe en el menú.')
 
 class contactViewSet(viewsets.ModelViewSet):
     queryset = contact.objects.all()
