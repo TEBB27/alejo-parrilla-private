@@ -9,14 +9,16 @@ from .models import menu, contact, booking, recomendation
 class menuViewSet(viewsets.ModelViewSet):
     queryset = menu.objects.all()
     serializer_class = menuSerializer
-
-    def add_menu_item(request, item_name):
-        item, created = menu.objects.get_or_create(name=item_name)
-        
-        if created:
-            return HttpResponse(f'Item {item_name} ha sido añadido al menú.')
-        else:
-            return HttpResponse(f'Item {item_name} ya existe en el menú.')
+    def create(self, request):
+        name = request.data['name']
+        try:
+            menu.objects.get(name = name)
+            return Response({'message': 'El producto ya existe en la base de datos'})
+        except ObjectDoesNotExist:
+            menu_item = menu(name=name)
+            menu_item.save()
+            return Response({'message': 'El producto se ha registrado satisfactoriamente'})
+    
 
 class contactViewSet(viewsets.ModelViewSet):
     queryset = contact.objects.all()
