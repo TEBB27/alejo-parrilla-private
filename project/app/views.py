@@ -23,6 +23,12 @@ class contactViewSet(viewsets.ModelViewSet):
             client = contact(email=email)
             client.save()
             return Response({'message': 'El correo se ha registrado satisfactoriamente'})
+        
+    def update(self, request, *args, **kwargs):
+        email = request.data['email']
+        if contact.objects.filter(email=email).exclude(pk=kwargs['pk']).exists():
+            return Response({'message': 'El correo ya existe en la base de datos'}, status=400)
+        return super().update(request, *args, **kwargs)
     
 class bookingViewSet(viewsets.ModelViewSet):
     queryset = booking.objects.all()
