@@ -1,6 +1,4 @@
 from django.db import models
-
-# Create your models here.
 from django.db import models
 
 CATEGORY = [
@@ -12,9 +10,9 @@ CATEGORY = [
 ]
 
 RESTAURANTS = [
-    ('Carnes', 'Carnes'),
-    ('Pescados', 'Pescados'),
-    ('Típicos', 'Típicos'), 
+    ('', ''),
+    ('', ''),
+    ('', ''), 
 ]
 class menu (models.Model):
     name = models.CharField(max_length=40)
